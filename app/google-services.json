@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "533613141426",
+    "firebase_url": "https://prawo-bd67e.firebaseio.com",
+    "project_id": "prawo-bd67e",
+    "storage_bucket": "prawo-bd67e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533613141426:android:e2d0c443f6c5f4c8",
+        "android_client_info": {
+          "package_name": "com.abed.prawo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533613141426-1ddgv1vv78hnsfspjfv5ifrv5eimrmkp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjSF2NPho6a3gGVRzLofbtVXh6Z6ARAfM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
