@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Prawo</string>
+    <string name="label_sign_in_activity">Sign in</string>
     <string name="btn_previous">Previous</string>
     <string name="btn_next">Next</string>
     <string name="btn_done">Done</string>
     <string name="tv_count">Count</string>
     <string name="tv_word">Original</string>
     <string name="tv_word2">Translation</string>
+    <!--<string name="default_web_client_id">715832843992-qqja66s20g4oigspcasvtfbd6nmdpk3e.apps.googleusercontent.com</string>-->
 </resources>

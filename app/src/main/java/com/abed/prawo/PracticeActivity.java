@@ -3,8 +3,6 @@ package com.abed.prawo;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +14,10 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class ViewActivity extends AppCompatActivity {
+public class PracticeActivity extends AppCompatActivity {
 
-    private static final String TAG = ViewActivity.class.getSimpleName();
+    private static final String TAG = PracticeActivity.class.getSimpleName();
 
     private List<Item> items;
     private int index;
@@ -39,7 +36,7 @@ public class ViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view);
+        setContentView(R.layout.activity_practice);
 
         initViews();
 

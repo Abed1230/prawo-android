@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "533613141426-dv5h0ansmngkbeif90bsd9ou13tjf8rh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abed.prawo",
+            "certificate_hash": "b783b9821e532296f1ef170137998dcb2d34f381"
+          }
+        },
+        {
+          "client_id": "533613141426-ghv82f9rshcp79cvtjt0sgggu2d0c6qu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abed.prawo",
+            "certificate_hash": "335d9b4f0a6e5478c700be38bde965470f06b779"
+          }
+        },
+        {
           "client_id": "533613141426-1ddgv1vv78hnsfspjfv5ifrv5eimrmkp.apps.googleusercontent.com",
           "client_type": 3
         }
