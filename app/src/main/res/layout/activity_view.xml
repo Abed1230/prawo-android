@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ViewActivity">
 
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/btn_done"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -49,22 +62,23 @@
         android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="26dp"
         android:text="@string/tv_count"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_previous"
-        app:layout_constraintEnd_toStartOf="@+id/btn_next"
-        app:layout_constraintStart_toEndOf="@+id/btn_previous"
-        app:layout_constraintTop_toTopOf="@+id/btn_previous" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_word"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
         android:text="@string/tv_word"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/h5"
         app:layout_constraintBottom_toTopOf="@+id/view"
@@ -72,11 +86,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tv_word2"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_translated_word"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/tv_word2"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/h5"
         app:layout_constraintEnd_toEndOf="parent"

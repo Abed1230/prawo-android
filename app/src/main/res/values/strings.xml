@@ -2,6 +2,7 @@
     <string name="app_name">Prawo</string>
     <string name="btn_previous">Previous</string>
     <string name="btn_next">Next</string>
+    <string name="btn_done">Done</string>
     <string name="tv_count">Count</string>
     <string name="tv_word">Original</string>
     <string name="tv_word2">Translation</string>
