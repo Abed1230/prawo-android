@@ -15,14 +15,25 @@ import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int RC_SIGN_IN = 9003;
+    private static final int RC_SIGN_IN = 1;
+
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        signIn();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            updateUI(user);
+        } else {
+            signIn();
+        }
     }
 
     private void signIn() {
