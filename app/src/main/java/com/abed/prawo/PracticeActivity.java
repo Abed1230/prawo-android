@@ -1,9 +1,11 @@
 package com.abed.prawo;
 
 import android.content.res.AssetFileDescriptor;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
+import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,9 +66,9 @@ public class PracticeActivity extends AppCompatActivity {
         //createTestData();
 
         DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference().
-                child("collections").
+                child(Constants.DB_KEY_COLLECTIONS).
                 child(collectionId).
-                child("items");
+                child(Constants.DB_KEY_ITEMS);
 
         itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,8 +78,7 @@ public class PracticeActivity extends AppCompatActivity {
                     Item item = itemSnapshot.getValue(Item.class);
                     items.add(item);
                 }
-                //updateUI();
-                Log.d(TAG, "items size" + items.size());
+                updateUI();
             }
 
             @Override
@@ -131,20 +133,18 @@ public class PracticeActivity extends AppCompatActivity {
         btnPrev =  findViewById(R.id.btn_previous);
         btnNext =  findViewById(R.id.btn_next);
         btnDone = findViewById(R.id.btn_done);
-
-        btnPrev.setVisibility(View.GONE);
     }
 
     private void updateUI() {
-        if (items.size() == 0)
+        if (items.size() == 0) {
             return;
-
-        // set visibility
-        if (index < 1)
+        }
+        // if first item hide previous button
+        if (index == 0)
             btnPrev.setVisibility(View.GONE);
         else
             btnPrev.setVisibility(View.VISIBLE);
-
+        // if last item show done button
         if (index == items.size()-1) {
             btnNext.setVisibility(View.GONE);
             btnDone.setVisibility(View.VISIBLE);
