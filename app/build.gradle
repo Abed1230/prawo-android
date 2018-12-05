@@ -19,6 +19,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-database:16.0.5'
     implementation 'com.firebaseui:firebase-ui-auth:4.2.1'
     implementation 'com.google.android.gms:play-services-base:16.0.1'
     implementation 'com.google.android.gms:play-services-basement:16.1.0'
