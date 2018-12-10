@@ -1,29 +1,29 @@
 package com.abed.prawo;
 
 public class Item {
-    private String imageUrl;
+    private String imageFilePath;
     private String word;
     private String translatedWord;
-    private String soundUrl;
-    private String translatedSoundUrl;
+    private String soundFilePath;
+    private String translatedSoundFilePath;
 
     public Item() {
     }
 
-    public Item(String imageUrl, String word, String translatedWord, String soundUrl, String translatedSoundUrl) {
-        this.imageUrl = imageUrl;
+    public Item(String imageFilePath, String word, String translatedWord, String soundFilePath, String translatedSoundFilePath) {
+        this.imageFilePath = imageFilePath;
         this.word = word;
         this.translatedWord = translatedWord;
-        this.soundUrl = soundUrl;
-        this.translatedSoundUrl = translatedSoundUrl;
+        this.soundFilePath = soundFilePath;
+        this.translatedSoundFilePath = translatedSoundFilePath;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageFilePath() {
+        return imageFilePath;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageFilePath(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
     }
 
     public String getWord() {
@@ -42,19 +42,19 @@ public class Item {
         this.translatedWord = translatedWord;
     }
 
-    public String getSoundUrl() {
-        return soundUrl;
+    public String getSoundFilePath() {
+        return soundFilePath;
     }
 
-    public void setSoundUrl(String soundUrl) {
-        this.soundUrl = soundUrl;
+    public void setSoundFilePath(String soundFilePath) {
+        this.soundFilePath = soundFilePath;
     }
 
-    public String getTranslatedSoundUrl() {
-        return translatedSoundUrl;
+    public String getTranslatedSoundFilePath() {
+        return translatedSoundFilePath;
     }
 
-    public void setTranslatedSoundUrl(String translatedSoundUrl) {
-        this.translatedSoundUrl = translatedSoundUrl;
+    public void setTranslatedsoundFilePath(String translatedSoundFilePath) {
+        this.translatedSoundFilePath = translatedSoundFilePath;
     }
 }

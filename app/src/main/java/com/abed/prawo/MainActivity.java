@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 updateUI(user);
-                startActivity(new Intent(this, PracticeActivity.class));
 
                 // ...
             } else {
@@ -74,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-
+        if (user != null) {
+            startActivity(new Intent(this, PracticeActivity.class));
+        }
     }
 }

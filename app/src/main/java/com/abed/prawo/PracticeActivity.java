@@ -1,11 +1,7 @@
 package com.abed.prawo;
 
-import android.content.res.AssetFileDescriptor;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
-import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,15 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,9 @@ public class PracticeActivity extends AppCompatActivity {
 
     private String collectionId = "collection1";
 
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,22 +67,22 @@ public class PracticeActivity extends AppCompatActivity {
         if (mpTranslatedSound == null)
             mpTranslatedSound = new MediaPlayer();
 
-        //createTestData();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
 
-        DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference().
-                child(Constants.DB_KEY_COLLECTIONS).
-                child(collectionId).
-                child(Constants.DB_KEY_ITEMS);
+        DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference()
+                .child(Constants.DB_KEY_COLLECTIONS)
+                .child(collectionId)
+                .child(Constants.DB_KEY_ITEMS);
 
         itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                items.clear();
                 for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
                     Item item = itemSnapshot.getValue(Item.class);
                     items.add(item);
+                    updateUI();
                 }
-                updateUI();
             }
 
             @Override
@@ -139,12 +143,12 @@ public class PracticeActivity extends AppCompatActivity {
         if (items.size() == 0) {
             return;
         }
-        // if first item hide previous button
+        // if is first item then hide previous button
         if (index == 0)
             btnPrev.setVisibility(View.GONE);
         else
             btnPrev.setVisibility(View.VISIBLE);
-        // if last item show done button
+        // if is last item then show done button
         if (index == items.size()-1) {
             btnNext.setVisibility(View.GONE);
             btnDone.setVisibility(View.VISIBLE);
@@ -154,6 +158,54 @@ public class PracticeActivity extends AppCompatActivity {
         }
 
         //set image
+        StorageReference imageRef = storage.getReferenceFromUrl(items.get(index).getImageFilePath());
+        GlideApp.with(this)
+                .load(imageRef)
+                .into(imv);
+
+        //set words
+        tvWord.setText(capitalizeFirstLetter(items.get(index).getWord()));
+        tvTranslatedWord.setText(capitalizeFirstLetter(items.get(index).getTranslatedWord()));
+
+        //set sounds
+
+        String soundUrl = items.get(index).getSoundFilePath();
+        String fileName = soundUrl.substring(soundUrl.lastIndexOf("/") + 1);
+        File file = new File(getFilesDir(), fileName);
+        if (file.exists()) {
+            // load sound from file
+            Log.d(TAG, "load sound from file...");
+           prepareMediaPlayer(mpOriginalSound, file);
+
+        } else {
+            // download sound from cloud
+            Log.d(TAG, "download sound from cloud...");
+            StorageReference soundRef = storage.getReferenceFromUrl(soundUrl);
+            soundRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    // File created
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "failed to get file: " + e);
+                }
+            });
+        }
+        prepareMediaPlayer(mpOriginalSound, file);
+
+
+
+
+
+
+        //set count text
+        String t = index+1 + "/" + items.size();
+        tvCount.setText(t);
+
+        /*
         try {
             InputStream in = getAssets().open(items.get(index).getImageUrl());
             Drawable d = Drawable.createFromStream(in, null);
@@ -162,12 +214,31 @@ public class PracticeActivity extends AppCompatActivity {
             Log.e(TAG, "error loading image: " + e);
             imv.setImageDrawable(null);
         }
+        */
 
-        //set words
-        tvWord.setText(capitalizeFirstLetter(items.get(index).getWord()));
-        tvTranslatedWord.setText(capitalizeFirstLetter(items.get(index).getTranslatedWord()));
-
+        /*
         //set audio
+        StorageReference soundRef  = storageRef.child("sounds").child("1.mp3");
+        try {
+            final File sound = File.createTempFile("sounds", "mp3");
+            soundRef.getFile(sound).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    //File created
+                    mpOriginalSound.reset();
+                    mpOriginalSound.setDataSource();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+        } catch (IOException e) {
+            Log.e(TAG, "file error: " + e);
+        }
+
         try {
             AssetFileDescriptor afd = getAssets().openFd(items.get(index).getSoundUrl());
             mpOriginalSound.reset();
@@ -188,10 +259,18 @@ public class PracticeActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, "error loading sound: " + e);
         }
+        */
+    }
 
-        //set count text
-        String t = index+1 + "/" + items.size();
-        tvCount.setText(t);
+    private void prepareMediaPlayer(MediaPlayer mP, File file) {
+        try {
+            mP.reset();
+            mP.setDataSource(file.getPath());
+            mP.prepare();
+        } catch (IOException e) {
+            Log.e(TAG, "error preparing media player: " + e);
+        }
+
     }
 
     private String capitalizeFirstLetter(String s) {
